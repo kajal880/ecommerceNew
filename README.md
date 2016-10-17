@@ -44,6 +44,17 @@ Preconditions, Assumptions and Recommendations:
 
 • Since, the back-end Web-Api project is hosted in the Local IIS, the Visual Studio must be opened in the administrator mode. Otherwise, Web-Api project fails to load and “This project requires users input. Reload the project for more information” message would be displayed in the Visual Studio. 
 
+•	If you get “XMLHttpRequest cannot load <Your API URL>. Response for preflight has invalid HTTP status code 405”, then add the following code in Global.asax.cs in your WebApi layer.
+
+		protected void Application_BeginRequest()
+    		{
+        if (Request.Headers.AllKeys.Contains("Origin") && Request.HttpMethod == "OPTIONS")
+        {
+            Response.Flush();
+        }
+    }
+
+
 License: This project is distributed under the MIT License. A copy of the same can be obtained at: https://opensource.org/licenses/MIT 
 
 Developer Information: 
